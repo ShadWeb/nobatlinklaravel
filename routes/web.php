@@ -17,14 +17,25 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/owner/services', [\App\Http\Controllers\Owner\ServiceController::class, 'store']);
     Route::put('/owner/services/{id}', [\App\Http\Controllers\Owner\ServiceController::class, 'update']);
     Route::delete('/owner/services/{id}', [\App\Http\Controllers\Owner\ServiceController::class, 'destroy']);
-
+    // Create service UI
+    Route::get('/owner/services/create', fn() => \Inertia\Inertia::render('Owner/ServiceCreate'));
     // Working hours management
     Route::get('/owner/working-hours', [\App\Http\Controllers\Owner\WorkingHourController::class, 'index']);
     Route::post('/owner/working-hours', [\App\Http\Controllers\Owner\WorkingHourController::class, 'store']);
     Route::put('/owner/working-hours/{id}', [\App\Http\Controllers\Owner\WorkingHourController::class, 'update']);
+    Route::delete('/owner/working-hours/{id}', [\App\Http\Controllers\Owner\WorkingHourController::class, 'destroy']);
+    // Create working‑hour UI
+    Route::get('/owner/working-hours/create', fn() => \Inertia\Inertia::render('Owner/WorkingHourCreate'));
+    // Business creation (already exists)
     Route::post('/owner/businesses', [\App\Http\Controllers\BusinessController::class, 'store']);
-
+    // Business settings UI (placeholder)
+    Route::get('/owner/businesses/{slug}/settings', fn($slug) => \Inertia\Inertia::render('Owner/BusinessSettings', ['slug' => $slug]));
+    // Customer appointments
+    Route::get('/appointments', [\App\Http\Controllers\Customer\AppointmentController::class, 'index']);
+    Route::get('/appointments/{id}', [\App\Http\Controllers\Customer\AppointmentController::class, 'show']);
+    Route::post('/appointments/{id}/cancel', [\App\Http\Controllers\Customer\AppointmentController::class, 'cancel']);
 });
+
 
 
 Route::get('/nazanin', fn() => \Inertia\Inertia::render('NazaninSample'));
