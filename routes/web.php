@@ -2,11 +2,14 @@
 
 
 Route::get('/', fn() => \Inertia\Inertia::render('Landing'));
-Route::get('/preview/nail', fn() => \Inertia\Inertia::render('PreviewNail'));
+Route::get('/login', fn() => \Inertia\Inertia::render('Auth/Login'));
+
 
 Route::get('/b/{slug}', [\App\Http\Controllers\PublicBusinessController::class, 'show']);
 
-// Owner protected routes
+Route::get('/b/{slug}/availability', [\App\Http\Controllers\Public\BookingController::class, 'availability']);
+Route::post('/b/{slug}/book', [\App\Http\Controllers\Public\BookingController::class, 'book']);
+
 Route::middleware(['auth'])->group(function () {
     // Service management
     Route::get('/owner/services', [\App\Http\Controllers\Owner\ServiceController::class, 'index']);
@@ -18,7 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/owner/working-hours', [\App\Http\Controllers\Owner\WorkingHourController::class, 'index']);
     Route::post('/owner/working-hours', [\App\Http\Controllers\Owner\WorkingHourController::class, 'store']);
     Route::put('/owner/working-hours/{id}', [\App\Http\Controllers\Owner\WorkingHourController::class, 'update']);
-    Route::delete('/owner/working-hours/{id}', [\App\Http\Controllers\Owner\WorkingHourController::class, 'destroy']);
+    Route::post('/owner/businesses', [\App\Http\Controllers\BusinessController::class, 'store']);
+
 });
 
 
