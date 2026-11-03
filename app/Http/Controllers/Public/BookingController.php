@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\Service;
+use App\Services\BookingAvailabilityService;
+use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,28 +23,36 @@ class BookingController extends Controller
         ]);
     }
 
-    // Return dummy available slots for a given service and date
+    // Return available slots for a given service and date (real logic)
     public function availability(Request $request, $slug)
     {
+        $business = Business::where('slug', $slug)->where('publication_status', 'published')->firstOrFail();
         $serviceId = $request->query('service_id');
         $date = $request->query('date');
-        // Simple dummy slots: every hour from 09:00 to 17:00
-        $slots = [];
-        for ($hour = 9; $hour <= 17; $hour++) {
-            $slot = sprintf('%s %02d:00', $date, $hour);
-            $slots[] = $slot;
-        }
-        return response()->json(['slots' => $slots]);
+        $service = Service::findOrFail($serviceId);
+        $availabilityService = new BookingAvailabilityService();
+        $slots = $availabilityService->getSlots($business, $service, $date);
+        // Convert Carbon slots to string format for front‑end
+        $slotStrings = array_map(fn($c) => $c->format('Y-m-d H:i'), $slots);
+        return response()->json(['slots' => $slotStrings]);
     }
 
-    // Handle booking submission (stub)
+    // Handle booking submission (real implementation)
     public function book(Request $request, $slug)
     {
-        // In a real implementation we would validate and store the booking.
-        // Here we simply return a success response.
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Booking received (stub).',
-        ]);
+        $business = Business::where('slug', $slug)->where('publication_status', 'published')->firstOrFail();
+        $service = Service::findOrFail($request->input('service_id'));
+        $payload = $request->only(['customer_name', 'phone', 'starts_at', 'idempotency_key']);
+        $payload['customer_name'] = $request->input('customer_name');
+        $payload['phone'] = $request->input('phone');
+        $payload['starts_at'] = $request->input('starts_at');
+        $payload['idempotency_key'] = $request->input('idempotency_key');
+        $bookingService = new BookingService();
+        try {
+            $booking = $bookingService->create($business, $service, $payload);
+            return response()->json(['booking' => $booking]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
     }
 }
