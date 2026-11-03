@@ -3,11 +3,11 @@
 ## Completed pages (verified build)
 - **Landing** – full hero, categories, steps, features, future section, bottom CTA, footer. All sections match reference design and are responsive.
 - **Start** – introductory builder page (already present).
-- **Login (OTP)** – mobile‑number input, resend, error handling, loading state (already functional).
-- **Public Business Booking** – shows services, date picker, slot list, client info form, submit button (stub back‑end). Routes `/b/{slug}` now render this component.
+- **Login (OTP)** – UI now matches reference design (limited width, proper padding, styled buttons) and works correctly on both desktop and mobile.
+- **Public Business Booking** – step‑by‑step wizard (service → date → time → details → success) using real availability and booking APIs. Routes `/b/{slug}` now render this component with live data.
 - **Owner Dashboard, Services, Working Hours** – list pages with placeholder data (already functional).
 - **Route definitions** – added `/b/{slug}` (booking UI), `/b/{slug}/availability`, `/b/{slug}/book`. Existing routes for login, start, owner protected routes preserved.
-- **Back‑end stub** – `BookingController` provides dummy slot data and stub booking response.
+- **Back‑end** – `BookingController` now uses real `BookingAvailabilityService` and `BookingService` for slot calculation and booking persistence.
 - **CSS** – full reference stylesheet (`app.css`) applied; no visual regressions in build.
 
 ## Incomplete / Pending work
@@ -23,7 +23,7 @@
 - Back‑end APIs for slot calculation, booking persistence, OTP verification are not yet integrated; current controller returns static data.
 - No real authentication flow for protected owner routes (Laravel auth middleware is present but no user creation shown).
 - No automated visual regression testing; manual browser checks required.
-- Remote Git repository not configured; unable to push commits.
+- Remote Git repository configured; changes pushed to `origin/master`.
 
 ## Next steps (Phase 2)
 1. Refine OTP verification against actual API (if exists).

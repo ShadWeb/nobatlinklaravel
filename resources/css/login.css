@@ -1,0 +1,167 @@
+:root {
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --radius-md: 8px;
+  --color-accent: #4352ff;
+  --color-accent-light: #4352ff14;
+  --color-surface: #fff;
+  --color-text: #0d1944;
+  --color-text-muted: #8a8b9a;
+  --color-border: #e3d9dc;
+  --color-error: #ff4d4f;
+}
+
+/* Login page styles (from reference) */
+.nail-page.login-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+
+.nail-page.login-page .login-illustration {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: var(--space-4);
+  color: var(--color-accent);
+}
+.nail-page.login-page h1 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+}
+.nail-page.login-page > p {
+  margin: 0 0 var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+.nail-page.login-page .form-error {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+  min-height: 1.2em;
+}
+.nail-page.login-page label {
+  display: block;
+  text-align: right;
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
+}
+.nail-page.login-page .input-with-icon {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+.nail-page.login-page .input-with-icon Icon {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+.nail-page.login-page .input-with-icon input {
+  width: 100%;
+  padding: var(--space-3) var(--space-10) var(--space-3) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  background: var(--color-surface);
+  color: var(--color-text);
+  direction: ltr;
+}
+.nail-page.login-page .input-with-icon input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+.nail-page.login-page .input-with-icon input:disabled {
+  opacity: 0.6;
+}
+.nail-page.login-page input[type="text"],
+.nail-page.login-page input[type="tel"] {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  background: var(--color-surface);
+  color: var(--color-text);
+  direction: ltr;
+}
+.nail-page.login-page input[type="text"]:focus,
+.nail-page.login-page input[type="tel"]:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+.nail-page.login-page .btn-primary,
+.nail-page.login-page .btn-secondary {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-top: var(--space-2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nail-page.login-page .btn-primary {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+}
+.nail-page.login-page .btn-primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+.nail-page.login-page .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.nail-page.login-page .btn-secondary {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+.nail-page.login-page .btn-secondary:hover:not(:disabled) {
+  background: var(--color-accent-light);
+}
+.nail-page.login-page .resend-text {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.nail-page.login-page .resend-link {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+.nail-page.login-page .resend-link:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+.nail-page.login-page .login-footer {
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+}
+.nail-page.login-page .login-footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.nail-page.login-page .login-footer a:hover {
+  text-decoration: underline;
+}

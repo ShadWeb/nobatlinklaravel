@@ -2,7 +2,8 @@
 
 
 Route::get('/', fn() => \Inertia\Inertia::render('Landing'));
-Route::get('/login', fn() => \Inertia\Inertia::render('Auth/Login'));
+Route::get('/start', fn() => \Inertia\Inertia::render('Start'));
+Route::get('/start/wizard', fn() => \Inertia\Inertia::render('StartWizard'));
 
 
 Route::get('/b/{slug}', [\App\Http\Controllers\PublicBusinessController::class, 'show']);
@@ -26,7 +27,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-// OTP routes
+Route::get('/nazanin', fn() => \Inertia\Inertia::render('NazaninSample'));
+Route::get('/nazanin/dashboard', fn() => \Inertia\Inertia::render('NazaninDashboard'));
+
 Route::middleware(['web','throttle:5,1'])->group(function () {
     Route::post('/api/auth/otp/request', [\App\Http\Controllers\Auth\OtpController::class, 'request']);
     Route::post('/api/auth/otp/verify', [\App\Http\Controllers\Auth\OtpController::class, 'verify']);
