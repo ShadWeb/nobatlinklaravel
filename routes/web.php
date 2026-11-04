@@ -2,7 +2,8 @@
 
 
 Route::get('/', fn() => \Inertia\Inertia::render('Landing'));
-Route::get('/start', fn() => \Inertia\Inertia::render('Start'));
+Route::get('/start', fn() => \Inertia\Inertia::render('Start'))->middleware('auth');
+Route::get('/login', fn() => \Inertia\Inertia::render('Auth/Login'))->name('login');
 Route::get('/start/wizard', fn() => \Inertia\Inertia::render('StartWizard'));
 
 

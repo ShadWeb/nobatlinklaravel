@@ -55,7 +55,7 @@ export default function Landing() {
                 ساخت صفحه رزرو
                 <Icon name="arrow" />
               </Link>
-              <Link className="button secondary" href="/preview/nail">
+              <Link className="button secondary" href="/nazanin">
                 مشاهده نمونه
               </Link>
             </div>
