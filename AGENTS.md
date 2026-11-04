@@ -1,177 +1,120 @@
-<laravel-boost-guidelines>
-=== foundation rules ===
-
-# Laravel Boost Guidelines
-
-## Foundational Context
-
-This application is a Laravel application running on PHP 8.5. Always use the APIs that match the installed major version of each package — do not assume a version.
-
-Before relying on a package's API, confirm its installed version:
-- PHP packages: run `composer show --direct` to list direct dependencies with versions, or `composer show <vendor/package>` for a single package.
-- JS packages: check `package.json` for the installed versions.
-
-## Skills Activation
-
-This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
-
-## Conventions
-
-- You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
-- Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
-- Check for existing components to reuse before writing a new one.
-
-## Verification Scripts
-
-- Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
-
-## Application Structure & Architecture
-
-- Stick to existing directory structure; don't create new base folders without approval.
-- Do not change the application's dependencies without approval.
-
-## Frontend Bundling
-
-- If a frontend change doesn't show in the UI or you get a "Unable to locate file in Vite manifest" error, run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
-
-## Documentation Files
-
-- You must only create documentation files if explicitly requested by the user.
-
-=== boost rules ===
-
-# Laravel Boost
-
-## Tools
-
-- Laravel Boost is an MCP server with tools designed specifically for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
-- Use `database-query` to run read-only queries against the database instead of writing raw SQL in tinker.
-- Use `database-schema` to inspect table structure before writing migrations or models.
-- Use `get-absolute-url` to resolve the correct scheme, domain, and port for project URLs. Always use this before sharing a URL with the user.
-- Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs are useful, ignore old entries.
-
-## Searching Documentation (IMPORTANT)
-
-- Use `search-docs` before changes that depend on Laravel ecosystem APIs, behavior, configuration, or version-specific syntax. Skip it for copy-only edits and other changes where package documentation is irrelevant. Reuse sufficient results already in context instead of searching again.
-- Pass a `packages` array to scope results when you know which packages are relevant.
-- Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
-- Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
-
-### Search Syntax
-
-1. Use words for auto-stemmed AND logic: `rate limit` matches both "rate" AND "limit".
-2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
-3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
-4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
-
-## Project Rules
-
-- This project contains committed, area-grouped rules in `.ai/rules` when that directory exists, including path-scoped framework guidelines under `.ai/rules/boost`. Before you enter plan mode or create/edit any file, you MUST first: open @.ai/rules/index.md (it maps file globs to rule files), read every rule file whose globs cover the path(s) in scope, and run `grep -rin 'keyword' .ai/rules` to catch what a path match alone misses. Do not write code until you have read and are following every matching rule. If `.ai/rules` does not exist, continue without it.
-
-## Artisan
-
-- Run Artisan commands directly via the command line (e.g., `php artisan route:list`). Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
-- Inspect routes with `php artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
-- Read configuration values using dot notation: `php artisan config:show app.name`, `php artisan config:show database.default`. Or read config files directly from the `config/` directory.
-
-## Tinker
-
-- Execute PHP in app context for debugging and testing code. Do not create models without user approval, prefer tests with factories instead. Prefer existing Artisan commands over custom tinker code.
-- Always use single quotes to prevent shell expansion: `php artisan tinker --execute 'Your::code();'`
-  - Double quotes for PHP strings inside: `php artisan tinker --execute 'User::where("active", true)->count();'`
-
-=== php rules ===
-
-# PHP
-
-- Always use curly braces for control structures, even for single-line bodies.
-- Use PHP 8 constructor property promotion: `public function __construct(public GitHub $github) { }`. Do not leave empty zero-parameter `__construct()` methods unless the constructor is private.
-- Use explicit return type declarations and type hints for all method parameters: `function isAccessible(User $user, ?string $path = null): bool`
-- Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
-- Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
-- Use array shape type definitions in PHPDoc blocks.
-
-=== deployments rules ===
-
-# Deployment
-
-- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
-- Activate the `deploying-to-cloud` skill whenever deploying to Laravel Cloud, configuring Cloud environments or resources, using the Cloud CLI, or troubleshooting Cloud deployments.
-
-=== inertia-laravel/core rules ===
-
-# Inertia
-
-- Inertia creates fully client-side rendered SPAs without modern SPA complexity, leveraging existing server-side patterns.
-- Components live in `resources/js/Pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
-- ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
-- IMPORTANT: Activate `inertia-react-development` when working with Inertia client-side patterns.
-
-# Inertia v3
-
-- Use all Inertia features from v1, v2, and v3. Check the documentation before making changes to ensure the correct approach.
-- New v3 features: standalone HTTP requests (`useHttp` hook), optimistic updates with automatic rollback, layout props (`useLayoutProps` hook), instant visits, simplified SSR via `@inertiajs/vite` plugin, custom exception handling for error pages.
-- Carried over from v2: deferred props, infinite scroll, merging props, polling, prefetching, once props, flash data.
-- When using deferred props, add an empty state with a pulsing or animated skeleton.
-- Axios has been removed. Use the built-in XHR client with interceptors, or install Axios separately if needed.
-- `Inertia::lazy()` / `LazyProp` has been removed. Use `Inertia::optional()` instead.
-- Prop types (`Inertia::optional()`, `Inertia::defer()`, `Inertia::merge()`) work inside nested arrays with dot-notation paths.
-- SSR works automatically in Vite dev mode with `@inertiajs/vite` - no separate Node.js server needed during development.
-- Event renames: `invalid` is now `httpException`, `exception` is now `networkError`.
-- `router.cancel()` replaced by `router.cancelAll()`.
-- The `future` configuration namespace has been removed - all v2 future options are now always enabled.
-
-=== laravel/core rules ===
-
-# Do Things the Laravel Way
-
-- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using `php artisan list` and check their parameters with `php artisan [command] --help`.
-- If you're creating a generic PHP class, use `php artisan make:class`.
-- Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
-
-### Model Creation
-
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `php artisan make:model --help` to check the available options.
-
-## APIs & Eloquent Resources
-
-- For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
-
-## URL Generation
-
-- When generating links to other pages, prefer named routes and the `route()` function.
-
-## Testing
-
-- When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
-- Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
-
-=== pint/core rules ===
-
-# Laravel Pint Code Formatter
-
-- If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
-
-=== phpunit/core rules ===
-
-# PHPUnit
-
-- This project uses PHPUnit. Create tests with `php artisan make:test --phpunit {name}`.
-- Do not include the test suite directory in `{name}`. Use `SomeFeatureTest`, not `Feature/SomeFeatureTest`.
-- Read the `testing-best-practices` skill for guidance on coverage, naming, structure, dependency isolation, and review.
-
-## Running Tests
-
-- Run the narrowest set of tests that covers the change. Pass a file path or `--filter=testName` to `php artisan test --compact`.
-- Rerun a test after each change to it.
-- Run `vendor/bin/phpunit` to call the test runner directly. It accepts the same file path and `--filter=testName` arguments.
-
-=== inertia-react/core rules ===
-
-# Inertia + React
-
-- IMPORTANT: Activate `inertia-react-development` when working with Inertia React client-side patterns.
-
-</laravel-boost-guidelines>
+# AGENTS.md — Toobatlink (توبت‌لینک)
+
+Read this file and `PLAN.md` at the start of every session. Keep answers short.
+Write all docs, reports, plans and code comments in English. Persian only for UI strings shown to users. Never mix other scripts into text.
+PLAN.md records verified status, but it can be wrong. Files in `docs/old/` are outdated and may contain wrong "done" claims. Before relying on any status, check real code, `php artisan route:list` and test output.
+
+## What this project is
+Toobatlink is an online booking-page product. In phase 1 every service provider (example: nail artist "Nazanin") has their own public booking page. Customers book through a multi-step flow. Providers manage bookings from a panel. Customers see their own appointments.
+
+Audience: Iranian users, mostly on phones. UI language is Persian (RTL).
+
+Version 1 scope: landing page, public artist page, booking flow (services → date → time → details with OTP phone verification → success), OTP login, customer appointments, artist panel (dashboard, manage services, working hours, settings), deposit payment gateway, artist subscription, SMS. Nothing beyond this scope. Platform admin is out of scope for now.
+
+## Stack
+- Laravel 13 monolith (backend + frontend in one repo), project folder `E:\nobatlink\nobt-laravel`
+- Inertia.js + React 19 (`.tsx` pages in `resources/js/Pages`, check exact folder casing) + Tailwind CSS v4 + Vite
+- Auth: OTP login (SMS code)
+- Exact versions: read `composer.json` and `package.json`. Never guess.
+- TypeScript status is UNVERIFIED: check whether `tsconfig.json` exists before claiming anything about type checks.
+
+## Reference material
+- `docs/reference/` is a Next.js PROTOTYPE of the design. Screens live in `components/nail-app.tsx`, styles in `app/globals.css`, icons in `components/icons.tsx`, screenshots in `docs/reference/qa/*.jpg`. It is the visual and behavioral source of truth.
+- Do NOT port the prototype's Next.js API routes, fake database, or fixed OTP code. Laravel already has the backend.
+- `docs/SCREEN_MAP.md` and `docs/FRONTEND_INVENTORY.md` map prototype screens to Laravel pages and routes.
+- Owner decisions override the reference docs (`docs/reference/docs/MVP_DECISIONS.md`, `PROJECT_MEMORY.md`). Current override: the customer MUST verify their phone with OTP before a booking is created. The booking uses the authenticated user's verified phone, never a phone sent in the request body.
+- Our own screenshots go to `qa-out/`. Never write into `docs/reference/qa/`.
+- Screens with NO reference (start wizard, working hours, business settings, appointment detail, payment, subscription, SMS): do not invent a design. Stop and ask; a design will be provided.
+
+## Folder ownership
+| Area | Paths | Agent |
+|---|---|---|
+| Backend | `app/`, `routes/`, `database/`, `config/`, `tests/` | backend |
+| Frontend | `resources/js/`, `resources/css/`, `resources/views/` | frontend |
+| Shared contract | `resources/js/types/` (Inertia props and API types) | backend defines, frontend consumes |
+| Docs | `docs/`, `PLAN.md`, `AGENTS.md` | whoever finishes the task |
+
+Never edit files outside your area. If you need a change there, write it in `PLAN.md` under "Handoff" and stop.
+
+## Commands
+Verify these against `composer.json` / `package.json` scripts before first use:
+- Dev server: `composer run dev` (or `php artisan serve` + `npm run dev`)
+- Tests: `php artisan test`
+- Frontend build: `npm run build`
+- Type check: `npx tsc --noEmit` only counts if it prints real results. If it prints usage/help, the check did NOT run.
+
+## Rules
+- UI text is Persian. Layout is RTL. For new code use logical Tailwind classes (`ms-`, `me-`, `ps-`, `pe-`, `text-start`), not `ml-`/`mr-`.
+- Mobile first. Design for one-hand use on a phone, then scale up.
+- Follow `docs/design-system.md` for colors, fonts, spacing, components. The platform (landing) and the artist app use different palettes; see that file.
+- Compare every page with its reference (screenshot in `docs/reference/qa/` if one exists, otherwise the prototype code) and match it.
+- Validate on the server (Form Requests). Never trust client input.
+- Every new backend endpoint or action gets a test.
+- No placeholder text, lorem ipsum, TODO stubs or hardcoded fake data in finished work. If something is not finished, say so.
+- Never ask for, print or commit secrets. Keys live only in `.env`.
+
+## Never do
+- Never install or remove packages without asking (see Reuse-first for the process).
+- Never edit a migration that already ran. Create a new migration.
+- Never run `migrate:fresh`, `db:wipe` or anything that deletes data.
+- Never touch `.env` or commit secrets.
+- Never change folder structure or rename files unless the task says so.
+- Never refactor code unrelated to the current task.
+- Never rewrite a whole file for a small change.
+- Never delete files unless the task says so.
+
+## Workflow for every task
+1. Read `AGENTS.md` and `PLAN.md`.
+2. Restate the task in 2-3 lines and list the files you will touch.
+3. Give a short plan. **Wait for approval before writing code.**
+4. Make the change. Keep the diff small.
+5. Run the checks for your area (tests, build, type check if it exists).
+6. Update `PLAN.md`: what finished, what is half-done, decisions, next task.
+7. Final report in the format below.
+
+## Definition of Done
+A task is done only if ALL are true:
+- the files exist and the route opens without error
+- `php artisan test` passes (including a new test for the change)
+- `npm run build` passes
+- the page has real content and real data, no placeholders
+- it matches the reference
+
+## Report format (mandatory)
+End every task with:
+- **Changed files:** list
+- **Verified (with proof):** each check + the exact command and its output
+- **Not verified:** everything you did not run or open
+- **Left to do:** list
+
+Rules for the report:
+- Never write "done", "works" or "complete" for something you did not run or open in this session.
+- Never claim a file exists, or that I approved something, unless you can show it.
+- Never infer status from file names, function names, `PLAN.md` or earlier reports.
+- If a command fails, paste the error as it is. Do not summarize it away.
+- If you are unsure, write "unverified". Do not guess.
+
+## If something is unclear
+Ask one short question. Do not guess product behavior.
+
+## Frontend Mode (current phase; overrides the Folder ownership section)
+Goal: finish the complete front end: every screen in `docs/SCREEN_MAP.md`, matching `docs/reference`.
+
+PORT, DON'T REDESIGN. The prototype already contains the screens, the CSS classes, and working logic such as the Jalali calendar. Reuse it.
+
+### Reuse-first (every task), in this order
+0. Reference prototype code: copy and adapt components, CSS classes, helpers (for example Jalali date logic, icons, screen markup) from `docs/reference` instead of rewriting. Port to React + Inertia: replace its fake data and fetch calls with Inertia props, `useForm` and Laravel routes. Keep the reference class names and CSS; do not rewrite them in Tailwind.
+1. Laravel/Inertia built-ins: Form Requests, Policies/Gates, Notifications, RateLimiter, Seeders/Factories, paginator, Carbon, Storage, shared props, flash, Inertia `useForm`/`router`/`<Link>`, partial reloads (`only`), named routes (Wayfinder only if installed and the project is TypeScript). Check docs with Laravel Boost `search-docs` if available.
+2. A package already in `composer.json` / `package.json` (for example `@phosphor-icons/react` for icons).
+3. A well-known maintained package. NEVER install silently. Ask first with: name, what it replaces, last release date, license, approx size, and React 19 / Tailwind v4 compatibility. Prefer a release within the last 12 months.
+4. Custom code only if 0-3 do not fit. Say why.
+
+Record each reuse decision in one line in `docs/REUSE.md` (need → choice → reason). Only write decisions you actually made.
+Do not hand-build things the reference or a package already provides: modals, dropdowns, selects, tabs, date/calendar pickers (need Jalali + Persian digits), calendar/schedule views, charts, toasts, sortable/filterable tables, auth/session/throttle/validation/flash plumbing, admin back-offices. Do not hand-roll fetch/axios for things Inertia already does.
+
+### Rules
+- Allowed backend touch in this phase: thin GET routes and controller methods that only `Inertia::render` existing models/services; seeders, factories and test helpers for demo data. No migrations, no new business logic. Anything else goes to Handoff in PLAN.md.
+- QA and screenshots run against a SEPARATE database (e.g. a SQLite file). Never wipe or reseed my dev database.
+- No fake data. If a backend does not exist yet, mark the mock with `// BACKEND-PENDING: <what>` and list it in PLAN.md under "Pending backend". A page that uses such a mock is never "done".
+- A page is DONE only if: route opened, screenshots at 390px and 1440px compared with the reference, RTL ok, loading/empty/error states exist, forms hit real endpoints and show validation errors, no placeholder text, `npm run build` and `php artisan test` pass, a feature test covers the route (`assertInertia`), no console errors.
+- Work one group at a time. Stop after each group and report.

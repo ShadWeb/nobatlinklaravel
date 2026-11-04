@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="E:\nobatlink\nobt-laravel\phpunit.xml" tests="5" assertions="17" errors="0" failures="0" skipped="0" time="15.393160">
+    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.002492">
+      <testsuite name="Tests\Unit\ExampleTest" file="E:\nobatlink\nobt-laravel\tests\Unit\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.002492">
+        <testcase name="test_that_true_is_true" file="E:\nobatlink\nobt-laravel\tests\Unit\ExampleTest.php" line="12" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" assertions="1" time="0.002492"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="4" assertions="16" errors="0" failures="0" skipped="0" time="15.390668">
+      <testsuite name="Tests\Feature\Auth\OtpTest" file="E:\nobatlink\nobt-laravel\tests\Feature\Auth\OtpTest.php" tests="1" assertions="3" errors="0" failures="0" skipped="0" time="12.491924">
+        <testcase name="test_registers_and_logs_in_via_otp" file="E:\nobatlink\nobt-laravel\tests\Feature\Auth\OtpTest.php" line="12" class="Tests\Feature\Auth\OtpTest" classname="Tests.Feature.Auth.OtpTest" assertions="3" time="12.491924"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ExampleTest" file="E:\nobatlink\nobt-laravel\tests\Feature\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="2.083306">
+        <testcase name="test_the_application_returns_a_successful_response" file="E:\nobatlink\nobt-laravel\tests\Feature\ExampleTest.php" line="13" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" assertions="1" time="2.083306"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\OtpFlowTest" file="E:\nobatlink\nobt-laravel\tests\Feature\OtpFlowTest.php" tests="2" assertions="12" errors="0" failures="0" skipped="0" time="0.815438">
+        <testcase name="test_otp_request_and_prevents_resend_within_cooldown" file="E:\nobatlink\nobt-laravel\tests\Feature\OtpFlowTest.php" line="15" class="Tests\Feature\OtpFlowTest" classname="Tests.Feature.OtpFlowTest" assertions="6" time="0.123993"/>
+        <testcase name="test_verifies_correct_otp_and_prevents_reuse" file="E:\nobatlink\nobt-laravel\tests\Feature\OtpFlowTest.php" line="41" class="Tests\Feature\OtpFlowTest" classname="Tests.Feature.OtpFlowTest" assertions="6" time="0.691445"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
